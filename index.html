@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Just For You 💖</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: pink;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 2.3em;
+      color: hotpink;
+      text-shadow: 0 0 10px hotpink;
+      padding: 0 10px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .question {
+      font-size: 1.4em;
+      margin: 30px 15px 15px;
+      animation: float 3s ease-in-out infinite;
+      padding: 0 20px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .btn {
+      font-size: 1.1em;
+      margin: 10px;
+      padding: 12px 26px;
+      background-color: pink;
+      color: black;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 0 12px hotpink;
+      transition: transform 0.2s ease;
+      width: 70%;
+      max-width: 280px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.85em;
+      opacity: 0.7;
+      padding: 20px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .emoji-container, .celebrate-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .emoji, .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(1); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .celebrate-text {
+      color: pink;
+      font-size: 2em;
+      margin-top: 50px;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px hotpink; }
+      to { text-shadow: 0 0 20px deeppink, 0 0 30px pink; }
+    }
+  </style>
+</head>
+<body>
+  <div class="emoji-container" id="emoji-container"></div>
+  <div class="celebrate-container" id="celebrate-container"></div>
+
+  <h1 id="main-title">🌸 Just For You 🌸</h1>
+  <div id="quiz">
+    <div class="question" id="question">Did you like me? 🥺💕</div>
+    <button class="btn" onclick="nextQuestion(true)">YES 💖</button>
+    <button class="btn">NO 💔</button>
+  </div>
+
+  <footer id="footer">Made with endless love 💌 by someone who truly cares 💗</footer>
+
+  <script>
+    const questions = [
+      "Did you like me? 🥺💕",
+      "You will never leave me? 💔👉👈",
+      "You will be my girl? 😍🌹",
+      "You will remain mine in the future too? 🔐💘",
+      "Will you be my girlfriend forever? 💍💕"
+    ];
+
+    let current = 0;
+
+    function nextQuestion(answeredYes) {
+      if (current < questions.length - 1) {
+        current++;
+        document.getElementById("question").textContent = questions[current];
+      } else {
+        if (answeredYes) {
+          celebrateLove();
+        }
+      }
+    }
+
+    function celebrateLove() {
+      document.body.innerHTML = `
+        <div class="celebrate-container" id="celebrate-container"></div>
+        <h1 class="celebrate-text">💖 She Said YES! 💖</h1>
+        <p style="font-size:1.5em; color:hotpink;">You made me the happiest person ever! 💍💞</p>
+      `;
+      const container = document.getElementById('celebrate-container');
+      const hearts = ['💖','💘','💕','🥺','🌸','🎉','💍','💞','💓','😍','🎊'];
+
+      function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (3 + Math.random() * 4) + 's';
+        heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+        container.appendChild(heart);
+        setTimeout(() => container.removeChild(heart), 7000);
+      }
+
+      setInterval(createHeart, 200);
+    }
+
+    // Regular floating emojis
+    const emojis = ['💖', '🥺', '💘', '🌸', '💞', '💍', '💕', '😍'];
+    const emojiContainer = document.getElementById('emoji-container');
+
+    function createEmoji() {
+      const emoji = document.createElement('div');
+      emoji.classList.add('emoji');
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.animationDuration = (4 + Math.random() * 3) + 's';
+      emoji.style.fontSize = (20 + Math.random() * 20) + 'px';
+      emojiContainer.appendChild(emoji);
+      setTimeout(() => emojiContainer.removeChild(emoji), 7000);
+    }
+
+    setInterval(createEmoji, 300);
+  </script>
+</body>
+</html>
